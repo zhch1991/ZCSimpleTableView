@@ -10,19 +10,25 @@
 #import "MYTableViewCell.h"
 
 @interface TestTableViewController ()
+<
+UITableViewDelegate,
+UITableViewDataSource
+>
 
 @end
 
 @implementation TestTableViewController
 
+#pragma mark - lifrCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor redColor];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 }
 
-#pragma mark - Table view data source
-
+#pragma mark - delegates
+#pragma mark -- UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 10;
 }
@@ -30,11 +36,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static CGFloat i = 1;
-    MYTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if(!cell)
-    {
-        cell = [[MYTableViewCell alloc] init];
-    }
+    
+    MYTableViewCell *cell = [[MYTableViewCell alloc] init];
+    
     cell.textLabel.text = @"123";
     cell.height = (i++) * 10;
     return cell;
@@ -47,9 +51,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MYTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    return cell.height;
-//    return 100;
+//    MYTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    return cell.height;
+    return 100;
 }
 
 @end
